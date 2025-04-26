@@ -30,8 +30,8 @@ function FarmCard ({userId}) {
         <CardContent>
           <h1>Farm at a Glance</h1>
           <h1>{farm?.farmName}</h1>
-          <h2>Growing Zone {farm?.growingZone}</h2>
-          <SimpleMap />
+          <h2>USDA Growing Zone {farm?.growingZone}</h2>
+          <SimpleMap latitude={farm?.latitude} longitude={farm?.longitude}/>
         </CardContent>
       </Card>
     </div>
