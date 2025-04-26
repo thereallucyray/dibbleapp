@@ -39,7 +39,8 @@ function Farm() {
   const [growZone, setGrowZone] = useState("")
   const [climate, setClimate] = useState("")
   const [edited, setEdited] = useState(false)
-  // const [loaded, setLoaded] = useState(false)
+  
+  const [soils, setSoils] = useState(null)
   
   const getFarmerFarm = async () => {
     try {
@@ -64,6 +65,7 @@ function Farm() {
       setSize(farm.size)
       setGrowZone(farm.growingZone)
       setClimate(farm.climate)
+      setSoils(farm.soils)
     }
   }, [farm])
 
@@ -201,6 +203,7 @@ function Farm() {
 
       {edited && <Button variant='contained' onClick={handleSave}>Save Edits</Button>}
 
+      <h1>Soils</h1>
       
     </div>
   );

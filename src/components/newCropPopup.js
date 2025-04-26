@@ -52,7 +52,7 @@ const crops = [
   "Walnuts"
 ];
 
-function NewCropPopUp() {
+function NewCropPopUp({farmId}) {
     const [open, setOpen] = useState(false);
     const [SelectedCrop, setSelectedCrop] = useState('');
     const [PlantDate, setPlantDate] = useState(dayjs());
@@ -76,7 +76,7 @@ function NewCropPopUp() {
 
     const handleCreateCrop = async () => {
       setOpen(false);
-      const result = await fetch(`http://localhost:3000/crops`, {
+      const result = await fetch(`http://localhost:8080/farms/${farmId}/crop`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -94,8 +94,8 @@ function NewCropPopUp() {
 
     return (
         <div>
-            <Button variant="outlined" startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
-                New Crop
+            <Button variant="contained" startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
+                Plant New Crop
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                 <DialogTitle>
