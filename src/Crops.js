@@ -1,4 +1,4 @@
-import Navbar from './components/navbar'
+import NewCropPopUp from './components/newCropPopup'
 import { Grid, Item } from '@mui/material';
 
 function Crops() {
@@ -6,6 +6,7 @@ function Crops() {
     <div className="Crops">
       <Grid container spacing={3}>
         <Grid size={6}>
+          <NewCropPopUp/>
           This is the Crops page!
         </Grid>
         <Grid size='grow'>
