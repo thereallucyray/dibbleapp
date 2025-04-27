@@ -8,6 +8,8 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
+import SoilList from './components/soilList';
+import NewSoilPopUp from './components/newSoilPopup';
 
 const climates = [
   "Tropical Rainforest",
@@ -40,7 +42,7 @@ function Farm() {
   const [climate, setClimate] = useState("")
   const [edited, setEdited] = useState(false)
   
-  const [soils, setSoils] = useState(null)
+  const [soils, setSoils] = useState([])
   
   const getFarmerFarm = async () => {
     try {
@@ -187,8 +189,7 @@ function Farm() {
           id="climate"
           variant="outlined"
           fullWidth
-          // value={SelectedCrop}
-          defaultValue={farm?.climate || ''}
+          defaultValue={farm?.climate ?? ''}
           onChange={(e) => {setClimate(e.target.value); setEdited(true)}}
           displayEmpty
       >
@@ -204,7 +205,8 @@ function Farm() {
       {edited && <Button variant='contained' onClick={handleSave}>Save Edits</Button>}
 
       <h1>Soils</h1>
-      
+      <NewSoilPopUp farmId={farm?.id}/>
+      <SoilList data={soils}/>
     </div>
   );
 }
