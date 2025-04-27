@@ -189,9 +189,8 @@ function Farm() {
           id="climate"
           variant="outlined"
           fullWidth
-          defaultValue={farm?.climate ?? ''}
+          value={climate}
           onChange={(e) => {setClimate(e.target.value); setEdited(true)}}
-          displayEmpty
       >
           {climates.map((climate, index) => (
               <MenuItem key={index} value={climate}>
