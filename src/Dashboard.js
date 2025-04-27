@@ -2,7 +2,7 @@ import './App.css';
 import CropList from './components/cropList';
 import FarmCard from './components/farmcard'
 import WeatherCard from './components/weathercard';
-import { Grid, Item } from '@mui/material';
+import { Grid, Card, CardContent } from '@mui/material';
 import {useState, useEffect} from 'react'
 import { getFarm } from './api/FarmerService';
 
@@ -40,9 +40,14 @@ function Dashboard() {
             <FarmCard userId={userId}/>
           </Grid>
           <Grid size='grow'>
-            <WeatherCard/>
-            <h1>My Crops</h1>
-            {crops && <CropList data={Array.from(crops)}/>}
+            <WeatherCard latitude={farm?.latitude} longitude={farm?.longitude}/>
+            <br/>
+            <Card style={{backgroundColor: "#E5F3CE"}}>
+              <CardContent>
+                <h1>My Crops</h1>
+                {crops && <CropList data={Array.from(crops)}/>}
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
       </div>
