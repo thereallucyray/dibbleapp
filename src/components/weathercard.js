@@ -7,6 +7,7 @@ function WeatherCard ({latitude, longitude}) {
 
   async function getForecast(){
     if (latitude && longitude){
+      console.log(latitude)
       const apiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit&daily=temperature_2m_max,temperature_2m_min,wind_speed_10m_max,et0_fao_evapotranspiration,precipitation_sum,precipitation_probability_max`;
     
       fetch(apiUrl)
@@ -38,9 +39,9 @@ function WeatherCard ({latitude, longitude}) {
           <h2>Current Temperature: {weather?.current_weather?.temperature} °F</h2>
           <h2>High: {weather?.daily?.temperature_2m_max[0]} °F</h2>
           <h2>Low: {weather?.daily?.temperature_2m_min[0]} °F</h2>
-          <h2>Wind Speed: {weather?.daily?.wind_speed_10m_max[0]}</h2>
-          <h2>Evapotranspiration: {weather?.daily?.et0_fao_evapotranspiration}</h2>
-          <h2>Precipitation: {weather?.daily?.precipitation_probability_max[0]}% chance of {weather?.daily?.precipitation_sum}</h2>
+          <h2>Wind Speed: {weather?.daily?.wind_speed_10m_max[0]} km/h</h2>
+          <h2>Evapotranspiration: {weather?.daily?.et0_fao_evapotranspiration[0]} mm</h2>
+          <h2>Precipitation: {weather?.daily?.precipitation_probability_max[0]}% chance of {weather?.daily?.precipitation_sum[0]} mm</h2>
         </CardContent>
       </Card>
     </div>
