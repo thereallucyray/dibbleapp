@@ -3,6 +3,7 @@ import { Grid, Item } from '@mui/material';
 import { getFarm } from './api/FarmerService';
 import { useState, useEffect } from 'react';
 import CropList from './components/cropList';
+import { getFarmCrops } from './api/FarmService';
 
 function Crops() {
   const userId = "d8f9585a-4478-4282-b896-82e595f54e32"
@@ -19,21 +20,24 @@ function Crops() {
     }
   };
 
+  const getFarmerCrops = async () => {
+    const data = await getFarmCrops(farm.id);
+    setCrops(data.data);
+  }
+
   useEffect(() => {
     getFarmerFarm();
   }, []);
 
   useEffect(()=>{
     if(farm !== null){
-      console.log("CROPS: ", Array.from(farm.crops))
-      setCrops(farm.crops)
+      getFarmerCrops();
     }
-    // console.log(farm.crops)
   }, [farm])
 
   return (
     <div className="Crops">
-      <NewCropPopUp farmId={farm?.id}/>
+      {farm && <NewCropPopUp farmId={farm.id}/>}
       <h1>My Crops</h1>
       {crops && <CropList data={Array.from(crops)}/>}
     </div>

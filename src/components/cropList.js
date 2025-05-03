@@ -3,7 +3,7 @@ import { Card, CardContent, Typography, Grid } from '@mui/material';
 
 
 const CropList = (data) => {
-  if(data !== null){
+  if(data !== null && data !== undefined){
     return (
       <Grid container spacing={2}>
         {data.data.map((item) => (

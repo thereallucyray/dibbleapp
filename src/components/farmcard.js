@@ -14,7 +14,6 @@ function FarmCard ({userId}) {
       console.log(data.data);
     } catch (error) {
       console.log(error);
-      // toastError(error.message);
     }
   };
 

@@ -19,6 +19,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { getFarmFields } from '../api/FarmService';
 
 const crops = [
   "Corn",
@@ -54,9 +55,16 @@ const crops = [
 
 function NewCropPopUp({farmId}) {
     const [open, setOpen] = useState(false);
+    const [fields, setFields] = useState(null);
+    const [SelectedField, setSelectedField] = useState('');
     const [SelectedCrop, setSelectedCrop] = useState('');
     const [PlantDate, setPlantDate] = useState(dayjs());
     const [Variety, setVariety] = useState('');
+
+    const getFields = async () => {
+        const data = await getFarmFields(farmId);
+        setFields(data.data);
+    }
 
     const handleOptionChange = (event) => {
         setSelectedCrop(event.target.value);
@@ -69,6 +77,7 @@ function NewCropPopUp({farmId}) {
     const handleClose = () => {
         setOpen(false);
         //reset all form fields
+        setSelectedField('');
         setSelectedCrop('');
         setPlantDate(dayjs());
         setVariety('');
@@ -76,7 +85,7 @@ function NewCropPopUp({farmId}) {
 
     const handleCreateCrop = async () => {
       setOpen(false);
-      const result = await fetch(`http://localhost:8080/farms/${farmId}/crop`, {
+      const result = await fetch(`http://localhost:8080/fields/${SelectedField.id}/crop`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -89,8 +98,16 @@ function NewCropPopUp({farmId}) {
           })
       });
 
-      // return (window.location.assign(`http://${process.env.STUDY_BUDDY_FRONTEND_URL}/home`))
+    //   return (window.location.assign(`http://localhost:3000/Crops`))
     }
+
+    useEffect(()=> {
+        getFields();
+    }, [])
+
+    useEffect(()=> {
+       console.log(fields)
+    }, [fields])
 
     return (
         <div>
@@ -114,16 +131,40 @@ function NewCropPopUp({farmId}) {
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
+                                <InputLabel id="select-field">Select field</InputLabel>
+                                <Select
+                                    labelId="select-field"
+                                    id="field"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={SelectedField}
+                                    onChange={(event) => {setSelectedField(event.target.value);}}
+                                    displayEmpty
+                                    required
+                                >
+                                    {fields?.map((field, index) => (
+                                        <MenuItem key={index} value={field}>
+                                            {field.fieldName}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </div>
+                    <br/>
+                    <div style={{ marginTop: '20px'}}>
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
                                 <InputLabel id="select-crop">Select crop</InputLabel>
                                 <Select
                                     labelId="select-crop"
                                     id="crop"
-                                    label="Select crop"
                                     variant="outlined"
                                     fullWidth
                                     value={SelectedCrop}
                                     onChange={handleOptionChange}
                                     displayEmpty
+                                    required
                                 >
                                     {crops.map((crop, index) => (
                                         <MenuItem key={index} value={crop}>

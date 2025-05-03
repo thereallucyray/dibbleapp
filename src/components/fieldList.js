@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 
 
-const SoilList = (data) => {
+const FieldList = (data) => {
   if(data !== null && data !== undefined){
     if(data.data !== null && data.data !== undefined){
       return (
@@ -12,16 +12,7 @@ const SoilList = (data) => {
               <Card>
                 <CardContent>
                   <Typography variant="h6" component="h2">
-                    {item.texture}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Soil Moisture: {item.moisture}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    Soil Structure: {item.structure}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    pH: {item.pH}
+                    {item.fieldName}
                   </Typography>
                 </CardContent>
               </Card>
@@ -33,4 +24,4 @@ const SoilList = (data) => {
   }
 };
 
-export default SoilList;
+export default FieldList;

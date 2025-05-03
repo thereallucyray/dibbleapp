@@ -9,7 +9,9 @@ import {
   Button
 } from '@mui/material';
 import SoilList from './components/soilList';
+import FieldList from './components/fieldList';
 import NewSoilPopUp from './components/newSoilPopup';
+import NewFieldPopUp from './components/newFieldPopUp';
 
 const climates = [
   "Tropical Rainforest",
@@ -43,6 +45,7 @@ function Farm() {
   const [edited, setEdited] = useState(false)
   
   const [soils, setSoils] = useState([])
+  const [fields, setFields] = useState([])
   
   const getFarmerFarm = async () => {
     try {
@@ -67,7 +70,7 @@ function Farm() {
       setSize(farm.size)
       setGrowZone(farm.growingZone)
       setClimate(farm.climate)
-      setSoils(farm.soils)
+      setFields(farm.fields)
     }
   }, [farm])
 
@@ -203,9 +206,13 @@ function Farm() {
 
       {edited && <Button variant='contained' onClick={handleSave}>Save Edits</Button>}
 
-      <h1>Soils</h1>
+      {/* <h1>Soils</h1>
       <NewSoilPopUp farmId={farm?.id}/>
-      <SoilList data={soils}/>
+      <SoilList data={soils}/> */}
+
+      <h1>Fields</h1>
+      <NewFieldPopUp farmId={farm?.id}/>
+      <FieldList data={fields}/>
     </div>
   );
 }

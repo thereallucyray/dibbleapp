@@ -27,7 +27,7 @@ function Dashboard() {
 
   useEffect(()=>{
     if(farm !== null){
-      console.log("CROPS: ", Array.from(farm.crops))
+      // console.log("CROPS: ", Array.from(farm.crops))
       setCrops(farm.crops)
     }
     // console.log(farm.crops)
