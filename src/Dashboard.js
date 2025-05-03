@@ -5,6 +5,7 @@ import WeatherCard from './components/weathercard';
 import { Grid, Card, CardContent } from '@mui/material';
 import {useState, useEffect} from 'react'
 import { getFarm } from './api/FarmerService';
+import { getFarmCrops } from './api/FarmService';
 
 function Dashboard() {
   const userId = "d8f9585a-4478-4282-b896-82e595f54e32"
@@ -21,9 +22,21 @@ function Dashboard() {
     }
   };
 
+  const getFarmerCrops = async () => {
+    const data = await getFarmCrops(farm.id);
+    setCrops(data.data);
+  }
+
   useEffect(() => {
     getFarmerFarm();
   }, []);
+
+
+  useEffect(()=>{
+    if(farm !== null){
+      getFarmerCrops();
+    }
+  }, [farm])
 
   useEffect(()=>{
     if(farm !== null){

@@ -36,10 +36,12 @@ function CropList ({data, fieldId}) {
                 <Typography variant="body2" color="textSecondary">
                   Yield (lbs): {item.yield}
                 </Typography>
-                <IconButton aria-label="delete" onClick={()=> {handleDeleteCrop(item.id)}}>
+                
+                {fieldId && <IconButton aria-label="delete" onClick={()=> {handleDeleteCrop(item.id)}}>
                   <DeleteIcon />
-                </IconButton>
-                <EditCropPopUp fieldId={fieldId} crop={item}/>
+                </IconButton>}
+                {fieldId && <EditCropPopUp fieldId={fieldId} crop={item}/>}
+                
               </CardContent>
             </Card>
           </Grid>

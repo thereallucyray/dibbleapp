@@ -212,6 +212,7 @@ function Farm() {
 
       <h1>Fields</h1>
       <NewFieldPopUp farmId={farm?.id}/>
+      <br/>
       <FieldList data={fields}/>
     </div>
   );
