@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteCrop } from '../api/FieldService';
 import EditCropPopUp from './editCropPopUp';
+import dayjs from "dayjs";
 
 
 function CropList ({data, fieldId}) {
@@ -14,6 +15,12 @@ function CropList ({data, fieldId}) {
     return (window.location.assign(`http://localhost:3000/Crops`))
   }
 
+  const calcDays = (datePlanted, daysToMaturity)=>{
+    const date1 = dayjs()
+    const diff = daysToMaturity - date1.diff(dayjs(datePlanted, "MM/DD/YYYY"), 'day')
+    return diff;
+  }
+
   if(data !== null && data !== undefined){
     return (
       <Grid container spacing={2}>
@@ -22,7 +29,7 @@ function CropList ({data, fieldId}) {
             <Card>
               <CardContent>
                 <Typography variant="h6" component="h2">
-                  Crop: {item.species}
+                  {item.species}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   Variety: {item.variety}
@@ -31,7 +38,7 @@ function CropList ({data, fieldId}) {
                   Date Planted: {item.datePlanted}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  Days to Maturity: {item.daysToMaturity}
+                  Days to Maturity: {calcDays(item.datePlanted, item.daysToMaturity)}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
                   Yield (lbs): {item.yield}

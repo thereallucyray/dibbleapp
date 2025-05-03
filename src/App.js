@@ -10,6 +10,7 @@ import Dashboard from './Dashboard';
 import Crops from './Crops'
 import Resources from './Resources';
 import Farm from './Farm'
+import Field from './Field'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/Crops" element={<Crops />} />
             <Route exact path="/Farm" element={<Farm/>} />
             <Route path="/Resources" element={<Resources />} />
+            <Route path="/Field/:id" element={<Field />} />
         </Routes>
     </Router>
   );

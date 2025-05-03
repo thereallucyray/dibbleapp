@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
+import {Link} from 'react-router-dom'
 
 
 const FieldList = (data) => {
@@ -11,9 +12,7 @@ const FieldList = (data) => {
             <Grid key={item.id}>
               <Card>
                 <CardContent>
-                  <Typography variant="h6" component="h2">
-                    {item.fieldName}
-                  </Typography>
+                  <Link to={`/Field/${item.id}`}>{item.fieldName}</Link>
                 </CardContent>
               </Card>
             </Grid>

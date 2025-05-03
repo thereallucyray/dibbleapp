@@ -41,11 +41,11 @@ function Crops() {
 
   return (
     <div className="Crops">
-      {farm && <NewCropPopUp farmId={farm.id}/>}
       <h1>My Crops</h1>
+      {farm && <NewCropPopUp farmId={farm.id}/>}
       
       {fields.map((f) => (
-        <FieldCropsList field={f} key={f.id}/>
+        <FieldCropsList field={f} active={true} key={f.id}/>
       ))}
     </div>
   );

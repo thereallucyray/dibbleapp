@@ -21,7 +21,7 @@ const SoilList = (data) => {
                     Soil Structure: {item.structure}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
-                    pH: {item.pH}
+                    pH: {item.ph}
                   </Typography>
                 </CardContent>
               </Card>

@@ -41,12 +41,13 @@ const structures = [
   "massive",
 ];
 
-function NewSoilPopUp({farmId}) {
+function NewSoilPopUp({fieldId}) {
     const [open, setOpen] = useState(false);
     const [texture, setTexture] = useState('');
     const [moisture, setMoisture] = useState('');
     const [structure, setStructure] = useState('');
-    const [pH, setpH] = useState(7);
+    const [pH, setpH] = useState(7.0);
+    const [notes, setNotes] = useState('');
 
     
     const handleClickOpen = () => {
@@ -59,12 +60,13 @@ function NewSoilPopUp({farmId}) {
         setTexture('');
         setMoisture('');
         setStructure('');
-        setpH(7);
+        setpH(7.0);
+        setNotes('');
     };
 
     const handleCreateSoil = async () => {
       setOpen(false);
-      const result = await fetch(`http://localhost:8080/farms/${farmId}/soil`, {
+      const result = await fetch(`http://localhost:8080/fields/${fieldId}/soil`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json'
@@ -74,21 +76,21 @@ function NewSoilPopUp({farmId}) {
               texture: texture,
               moisture: moisture,
               structure: structure,
-              pH: pH
+              ph: pH,
+              notes: notes
           })
       });
 
-      //return (window.location.assign(`http://${process.env.STUDY_BUDDY_FRONTEND_URL}/home`))
+      window.location.reload()
     }
 
     return (
         <div>
-            <Button variant="contained" startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
+            <Button variant="contained" sx={{ bgcolor: "#0C3100" }} startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
                 Add Soil
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                 <DialogTitle>
-                    Plant a New Crop!
                     <IconButton
                         edge="end"
                         color="inherit"
@@ -165,6 +167,17 @@ function NewSoilPopUp({farmId}) {
                           },
                         }}
                     />
+                    <div>
+                        <TextField
+                            id="outlined-multiline-static"
+                            label="Additional Notes"
+                            multiline
+                            rows={4}
+                            fullWidth
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                            />
+                        </div>
                     <br/>
                 </DialogContent>
                 <DialogActions>

@@ -8,6 +8,7 @@ import {
     IconButton,
     Typography,
     TextField,
+    FormControlLabel
 } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close"
 import EditIcon from '@mui/icons-material/Edit';
@@ -86,12 +87,17 @@ function EditCropPopUp({fieldId, crop}) {
                     Days to Maturity: {crop.daysToMaturity}
                   </Typography>
                   <br/>
-                  <Checkbox
-                    id="terminated-checkbox"
-                    checked={Terminated} // if the checkbox is checked (or not)
-                    onChange={() => setTerminated(!Terminated)} // toggles the checked state
-                    label="Terminated?"
-                  />
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                      id="terminated-checkbox"
+                      checked={Terminated} // if the checkbox is checked (or not)
+                      onChange={() => setTerminated(!Terminated)} // toggles the checked state
+                      label="Terminated?"
+                    />
+                    }
+                    label="Terminated?"/>
+                  
                   <div>
                     <TextField
                         required

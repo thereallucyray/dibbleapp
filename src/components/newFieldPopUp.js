@@ -43,7 +43,7 @@ function NewFieldPopUp({farmId}) {
 
     return (
         <div>
-            <Button variant="contained" startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
+            <Button variant="contained" sx={{ bgcolor: "#0C3100" }} startIcon={<AddRoundedIcon/>} onClick={handleClickOpen}>
                 Add Field
             </Button>
             <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
