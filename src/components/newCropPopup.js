@@ -60,6 +60,8 @@ function NewCropPopUp({farmId}) {
     const [SelectedCrop, setSelectedCrop] = useState('');
     const [PlantDate, setPlantDate] = useState(dayjs());
     const [Variety, setVariety] = useState('');
+    const [Maturity, setMaturity] = useState(0);
+    const [Notes, setNotes] = useState('');
 
     const getFields = async () => {
         const data = await getFarmFields(farmId);
@@ -81,6 +83,7 @@ function NewCropPopUp({farmId}) {
         setSelectedCrop('');
         setPlantDate(dayjs());
         setVariety('');
+        setMaturity(0);
     };
 
     const handleCreateCrop = async () => {
@@ -95,10 +98,12 @@ function NewCropPopUp({farmId}) {
               species: SelectedCrop,
               variety: Variety,
               datePlanted: PlantDate.format('MM/DD/YYYY').toString(),
+              daysToMaturity: Maturity,
+              notes: Notes
           })
       });
 
-    //   return (window.location.assign(`http://localhost:3000/Crops`))
+      return (window.location.assign(`http://localhost:3000/Crops`))
     }
 
     useEffect(()=> {
@@ -151,7 +156,6 @@ function NewCropPopUp({farmId}) {
                             </FormControl>
                         </Box>
                     </div>
-                    <br/>
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
@@ -185,6 +189,7 @@ function NewCropPopUp({farmId}) {
                             fullWidth
                         />
                     </div>
+                    <br/>
                     <div>
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <DatePicker
@@ -195,6 +200,28 @@ function NewCropPopUp({farmId}) {
                         </LocalizationProvider>
                     </div>
                     <br/>
+                    <div>
+                        <TextField
+                            required
+                            label="Days to Maturity"
+                            variant="outlined"
+                            onChange={(e) => setMaturity(e.target.value)}
+                            fullWidth
+                            type='number'
+                        />
+                    </div>
+                    <br/>
+                    <div>
+                    <TextField
+                        id="outlined-multiline-static"
+                        label="Additional Notes"
+                        multiline
+                        rows={4}
+                        fullWidth
+                        value={Notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                        />
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} variant="outlined">

@@ -4,11 +4,13 @@ import { getFarm } from './api/FarmerService';
 import { useState, useEffect } from 'react';
 import CropList from './components/cropList';
 import { getFarmCrops } from './api/FarmService';
+import FieldCropsList from './components/fieldCropsList';
 
 function Crops() {
   const userId = "d8f9585a-4478-4282-b896-82e595f54e32"
   const [farm, setFarm] = useState(null);
   const [crops, setCrops] = useState(null);
+  const [fields, setFields] = useState([]);
 
   const getFarmerFarm = async () => {
     try {
@@ -32,6 +34,8 @@ function Crops() {
   useEffect(()=>{
     if(farm !== null){
       getFarmerCrops();
+      setFields(farm.fields);
+      console.log("FIELDS: ", farm.fields)
     }
   }, [farm])
 
@@ -39,7 +43,10 @@ function Crops() {
     <div className="Crops">
       {farm && <NewCropPopUp farmId={farm.id}/>}
       <h1>My Crops</h1>
-      {crops && <CropList data={Array.from(crops)}/>}
+      
+      {fields.map((f) => (
+        <FieldCropsList field={f} key={f.id}/>
+      ))}
     </div>
   );
 }
