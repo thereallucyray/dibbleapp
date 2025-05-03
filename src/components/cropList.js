@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, Typography, Grid, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { deleteCrop } from '../api/FieldService';
+import EditCropPopUp from './editCropPopUp';
 
 
 function CropList ({data, fieldId}) {
@@ -38,6 +39,7 @@ function CropList ({data, fieldId}) {
                 <IconButton aria-label="delete" onClick={()=> {handleDeleteCrop(item.id)}}>
                   <DeleteIcon />
                 </IconButton>
+                <EditCropPopUp fieldId={fieldId} crop={item}/>
               </CardContent>
             </Card>
           </Grid>

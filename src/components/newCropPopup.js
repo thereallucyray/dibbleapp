@@ -84,6 +84,7 @@ function NewCropPopUp({farmId}) {
         setPlantDate(dayjs());
         setVariety('');
         setMaturity(0);
+        setNotes('');
     };
 
     const handleCreateCrop = async () => {
@@ -99,7 +100,9 @@ function NewCropPopUp({farmId}) {
               variety: Variety,
               datePlanted: PlantDate.format('MM/DD/YYYY').toString(),
               daysToMaturity: Maturity,
-              notes: Notes
+              notes: Notes,
+              yield: 0,
+              terminated: false
           })
       });
 
