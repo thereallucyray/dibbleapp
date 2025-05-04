@@ -13,6 +13,7 @@ function WeatherCard ({latitude, longitude}) {
       fetch(apiUrl)
         .then(response => {
           if (!response.ok) {
+            console.log('Network response not ok')
             throw new Error('Network response was not ok');
           }
           return response.json();
@@ -22,7 +23,7 @@ function WeatherCard ({latitude, longitude}) {
           setWeather(data)
         })
         .catch(error => {
-          console.error('There has been a problem with your fetch operation:', error);
+          console.log('There has been a problem with your fetch operation:', error);
         });
     }
   }

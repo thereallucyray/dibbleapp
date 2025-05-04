@@ -8,17 +8,30 @@ import {
     IconButton,
     Typography,
     TextField,
-    FormControlLabel
+    FormControlLabel,
+    Grid,
+    Card,
+    CardContent,
+    Box,
+    FormControl,
+    Select,
+    InputLabel,
+    MenuItem
 } from '@mui/material';
 import CloseIcon from "@mui/icons-material/Close"
 import EditIcon from '@mui/icons-material/Edit';
 import Checkbox from '@mui/material/Checkbox';
+import { getFieldActiveCrops } from '../api/FieldService';
+import { getIntercrops, addIntercrop } from '../api/CropService';
 
 function EditCropPopUp({fieldId, crop}) {
     const [open, setOpen] = useState(false);
     const [Yield, setYield] = useState(0);
     const [Notes, setNotes] = useState('');
     const [Terminated, setTerminated] = useState(false);
+    const [ActiveCrops, setActiveCrops] = useState([]);
+    const [Intercrops, setIntercrops] = useState([]);
+    const [SelectedIntercrop, setSelectedIntercrop] = useState('');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -34,7 +47,26 @@ function EditCropPopUp({fieldId, crop}) {
         setNotes(crop.notes)
         setYield(crop.yield)
         setTerminated(crop.terminated)
+        setSelectedIntercrop('');
     };
+
+    const getActiveCrops = async () => {
+      try {
+        const data  = await getFieldActiveCrops(fieldId);
+        setActiveCrops(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getCropInterCrops = async() => {
+      try {
+        const data  = await getIntercrops(crop.id);
+        setIntercrops(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     const handleUpdateCrop = async () => {
       console.log("CROP ID ", crop.id)
@@ -53,8 +85,17 @@ function EditCropPopUp({fieldId, crop}) {
           })
       });
 
+      if(SelectedIntercrop !== ''){
+        const result2 = await addIntercrop(crop.id, SelectedIntercrop.id);
+      }
+
       return (window.location.assign(`http://localhost:3000/Crops`))
     }
+
+    useEffect(()=>{
+      getActiveCrops();
+      getCropInterCrops();
+    }, [])
 
     return (
         <>
@@ -120,7 +161,50 @@ function EditCropPopUp({fieldId, crop}) {
                       onChange={(e) => setNotes(e.target.value)}
                       />
                   </div>
+                  <br/>
+                  <Typography variant="h6" component="h2">
+                    Intercrops
+                  </Typography>
 
+                  <Grid container spacing={2}>
+                    {Intercrops.map((item) => (
+                      <Grid key={item.id}>
+                        <Card>
+                          <CardContent>
+                            <Typography variant="h6" component="h2">
+                              {item.species}
+                            </Typography>
+                            <Typography variant="body2" color="textSecondary">
+                              Variety: {item.variety}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+
+                  <div style={{ marginTop: '20px'}}>
+                        <Box sx={{ minWidth: 120 }}>
+                            <FormControl fullWidth>
+                                <InputLabel id="select-intercrop">Add an Intercrop</InputLabel>
+                                <Select
+                                    labelId="select-intercrop"
+                                    id="intercrop"
+                                    variant="outlined"
+                                    fullWidth
+                                    value={SelectedIntercrop}
+                                    onChange={(event) => {setSelectedIntercrop(event.target.value);}}
+                                    displayEmpty
+                                >
+                                    {ActiveCrops?.map((crop, index) => (
+                                        <MenuItem key={index} value={crop}>
+                                            {crop.species}: {crop.variety}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} variant="outlined">
