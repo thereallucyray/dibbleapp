@@ -51,7 +51,6 @@ function Farm() {
     try {
       const data  = await getFarm(userId);
       setFarm(data.data);
-      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -74,9 +73,6 @@ function Farm() {
     }
   }, [farm])
 
-  // useEffect(() => {
-  //   console.log("Edited changed: ", edited)
-  // }, [edited]);
 
   const handleSave = async () => {
     const result = await fetch(`http://localhost:8080/farms/${farm.id}`, {
@@ -100,7 +96,7 @@ function Farm() {
   }
 
   return (
-    <div className="Farm">
+    <div className="Farm" >
       <h1>My Farm</h1>
       <Box
       component="form"
@@ -206,10 +202,7 @@ function Farm() {
 
       {edited && <Button variant='contained' onClick={handleSave}>Save Edits</Button>}
 
-      {/* <h1>Soils</h1>
-      <NewSoilPopUp farmId={farm?.id}/>
-      <SoilList data={soils}/> */}
-
+      
       <h1>Fields</h1>
       <NewFieldPopUp farmId={farm?.id}/>
       <br/>

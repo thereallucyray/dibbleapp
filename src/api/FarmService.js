@@ -14,6 +14,10 @@ export async function getFarmCrops(id) {
     return await axios.get(`${API_URL}/${id}/crops`);
 }
 
+export async function getFarmActiveCrops(id) {
+    return await axios.get(`${API_URL}/${id}/active_crops`);
+}
+
 export async function getFarmSoils(id) {
     return await axios.get(`${API_URL}/${id}/soils`);
 }

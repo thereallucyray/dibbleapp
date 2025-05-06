@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { Card, CardContent, Grid } from '@mui/material';
 import {Link} from 'react-router-dom'
 
 
@@ -10,7 +10,7 @@ const FieldList = (data) => {
         <Grid container spacing={2}>
           {data.data.map((item) => (
             <Grid key={item.id}>
-              <Card>
+              <Card style={{backgroundColor: "#E5F3CE"}}>
                 <CardContent>
                   <Link to={`/Field/${item.id}`}>{item.fieldName}</Link>
                 </CardContent>

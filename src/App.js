@@ -11,6 +11,7 @@ import Crops from './Crops'
 import Resources from './Resources';
 import Farm from './Farm'
 import Field from './Field'
+import Crop from './Crop'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/Farm" element={<Farm/>} />
             <Route path="/Resources" element={<Resources />} />
             <Route path="/Field/:id" element={<Field />} />
+            <Route path="/Crop/:id" element={<Crop />} />
         </Routes>
     </Router>
   );

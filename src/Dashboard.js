@@ -5,7 +5,7 @@ import WeatherCard from './components/weathercard';
 import { Grid, Card, CardContent } from '@mui/material';
 import {useState, useEffect} from 'react'
 import { getFarm } from './api/FarmerService';
-import { getFarmCrops } from './api/FarmService';
+import { getFarmActiveCrops } from './api/FarmService';
 
 function Dashboard() {
   const userId = "d8f9585a-4478-4282-b896-82e595f54e32"
@@ -23,7 +23,7 @@ function Dashboard() {
   };
 
   const getFarmerCrops = async () => {
-    const data = await getFarmCrops(farm.id);
+    const data = await getFarmActiveCrops(farm.id);
     setCrops(data.data);
   }
 
@@ -40,10 +40,8 @@ function Dashboard() {
 
   useEffect(()=>{
     if(farm !== null){
-      // console.log("CROPS: ", Array.from(farm.crops))
       setCrops(farm.crops)
     }
-    // console.log(farm.crops)
   }, [farm])
 
   return (
@@ -53,11 +51,11 @@ function Dashboard() {
             <FarmCard userId={userId}/>
           </Grid>
           <Grid size='grow'>
-            <WeatherCard latitude={farm?.latitude} longitude={farm?.longitude}/>
+            {farm && <WeatherCard latitude={farm.latitude} longitude={farm.longitude}/>}
             <br/>
             <Card style={{backgroundColor: "#E5F3CE"}}>
               <CardContent>
-                <h1>My Crops</h1>
+                <h1>Active Crops</h1>
                 {crops && <CropList data={Array.from(crops)}/>}
               </CardContent>
             </Card>

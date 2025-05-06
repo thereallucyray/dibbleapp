@@ -105,9 +105,10 @@ function NewSoilPopUp({fieldId}) {
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
-                                <InputLabel id="select-soil">Soil Texture</InputLabel>
+                                <InputLabel id="select-soil" shrink="true">Soil Texture</InputLabel>
                                 <Select
                                     labelId="select-soil"
+                                    label="Soil Texture"
                                     id="soil"
                                     variant="outlined"
                                     value={texture}
@@ -137,9 +138,10 @@ function NewSoilPopUp({fieldId}) {
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
-                                <InputLabel id="select-struct">Soil Structure</InputLabel>
+                                <InputLabel id="select-struct" shrink="true">Soil Structure</InputLabel>
                                 <Select
                                     labelId="select-struct"
+                                    label="Soil Structure"
                                     id="struct"
                                     variant="outlined"
                                     value={structure}
@@ -155,6 +157,7 @@ function NewSoilPopUp({fieldId}) {
                             </FormControl>
                         </Box>
                     </div>
+                    <br/>
                     <TextField
                         id="outlined-helperText"
                         label="pH"
@@ -167,6 +170,8 @@ function NewSoilPopUp({fieldId}) {
                           },
                         }}
                     />
+                    <br/>
+                    <br/>
                     <div>
                         <TextField
                             id="outlined-multiline-static"
