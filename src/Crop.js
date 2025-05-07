@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react'
 import { Grid, Card, CardContent } from '@mui/material';
 import { useParams } from 'react-router';
-import { getCrop } from './api/CropService';
+import { getCrop, getIntercrops } from './api/CropService';
 import { getFarm } from './api/FarmService';
-// import { getHistoricForecast } from './api/WeatherService';
+import CropList from './components/cropList';
 import dayjs from "dayjs";
 
 
@@ -17,10 +17,9 @@ function Crop() {
   const [lo, setAveLo] = useState(0);
   const [precip, setAvePrecip] = useState(0);
   const [frost, setFrostDays] = useState(0);
+  const [intercrops, setIntercrops] = useState(null);
 
   async function getHistoricForecast(latitude, longitude, start_date, end_date){
-    console.log("I'm here!")
-    console.log(latitude, longitude, start_date, end_date)
     const apiUrl = `https://archive-api.open-meteo.com/v1/archive?latitude=${latitude}&longitude=${longitude}&start_date=${start_date}&end_date=${end_date}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&hourly=temperature_2m&temperature_unit=fahrenheit`;
     fetch(apiUrl)
     .then(response => {
@@ -30,22 +29,14 @@ function Crop() {
       }
       return response.json();
     }).then(data => {
-      // console.log('Weather data:', data);
-      // console.log(data.daily.temperature_2m_max)
       const aveHi = data.daily.temperature_2m_max.reduce((a, b) => a + b) / data.daily.temperature_2m_max.length;
       setAveHi(aveHi);
-      // console.log(aveHi)
       const aveLo = data.daily.temperature_2m_min.reduce((a, b) => a + b) / data.daily.temperature_2m_min.length;
       setAveLo(aveLo);
-      // console.log(aveLo)
       const avePrecip = data.daily.precipitation_sum.reduce((a, b) => a + b) / data.daily.precipitation_sum.length;
       setAvePrecip(avePrecip);
-      // console.log(avePrecip)
       const frostDays = data.daily.temperature_2m_min.filter(d => (d <= 32.0)).length;
       setFrostDays(frostDays);
-      // console.log(frostDays);
-      // console.log({ aveHi, aveLo, avePrecip, frostDays })
-      // return { aveHi: aveHi, aveLo: aveLo, avePrecip: avePrecip, frostDays: frostDays };
     })
     .catch(error => {
       console.log('There has been a problem with your fetch operation:', error);
@@ -66,6 +57,15 @@ function Crop() {
     setFarm(farmData.data);
   }
 
+  const getCropInterCrops = async() => {
+    try {
+      const data  = await getIntercrops(crop.id);
+      setIntercrops(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const calcEndDate = (datePlanted, daysToMaturity)=>{
     const date1 = dayjs(datePlanted, "MM/DD/YYYY")
     date1.add(daysToMaturity, 'day')
@@ -79,12 +79,6 @@ function Crop() {
   const getWeatherData = async (farm) => {
     const start_date = dayjs(crop.datePlanted, "MM/DD/YYYY").format('YYYY-MM-DD');
     const end_date = calcEndDate(crop.datePlanted, crop.daysToMaturity);
-    // console.log(farm.latitude, farm.longitude, start_date, end_date)
-    // const { aveHi, aveLo, avePrecip, frostDays } = await getHistoricForecast(farm.latitude, farm.longitude, start_date, end_date);
-    // setAveHi(aveHi);
-    // setAveLo(aveLo);
-    // setAvePrecip(avePrecip);
-    // setFrostDays(frostDays);
     const data = await getHistoricForecast(farm.latitude, farm.longitude, start_date, end_date);
   }
 
@@ -96,12 +90,16 @@ function Crop() {
   useEffect(()=>{
     if(crop !== null && farm !== null){
       if(crop.weather == null){
-        console.log("no weather")
-        console.log(farm)
         getWeatherData(farm)
       }
     }
   }, [crop, farm])
+
+  useEffect(()=>{
+    if(crop !== null){
+      getCropInterCrops();
+    }
+  }, [crop])
 
   if (crop !== null){
   return (
@@ -136,6 +134,15 @@ function Crop() {
           </Card>
         </Grid>
       </Grid>
+      <br/>
+      <Grid size='grow'>
+          <Card style={{backgroundColor: "#E5F3CE"}}>
+            <CardContent>
+              <h2>Intercrops</h2>
+              {intercrops? <CropList data={intercrops}/> : <h3>No intercrops listed</h3>}
+            </CardContent>
+          </Card>
+        </Grid>
     </div>
   );
   }

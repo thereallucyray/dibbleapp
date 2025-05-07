@@ -23,6 +23,8 @@ import { getFarmFields } from '../api/FarmService';
 
 const crops = [
   "Corn",
+  "Beans",
+  "Squash",
   "Soybeans",
   "Wheat",
   "Cotton",
@@ -139,9 +141,10 @@ function NewCropPopUp({farmId}) {
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
-                                <InputLabel id="select-field">Select field</InputLabel>
+                                <InputLabel id="select-field" shrink={true}>Select field</InputLabel>
                                 <Select
                                     labelId="select-field"
+                                    label="Select Field"
                                     id="field"
                                     variant="outlined"
                                     fullWidth
@@ -162,9 +165,10 @@ function NewCropPopUp({farmId}) {
                     <div style={{ marginTop: '20px'}}>
                         <Box sx={{ minWidth: 120 }}>
                             <FormControl fullWidth>
-                                <InputLabel id="select-crop">Select crop</InputLabel>
+                                <InputLabel id="select-crop" shrink={true}>Select crop</InputLabel>
                                 <Select
                                     labelId="select-crop"
+                                    label="Select Crop"
                                     id="crop"
                                     variant="outlined"
                                     fullWidth

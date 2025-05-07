@@ -8,9 +8,7 @@ import {
   MenuItem,
   Button
 } from '@mui/material';
-import SoilList from './components/soilList';
 import FieldList from './components/fieldList';
-import NewSoilPopUp from './components/newSoilPopup';
 import NewFieldPopUp from './components/newFieldPopUp';
 
 const climates = [

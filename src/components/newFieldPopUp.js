@@ -59,6 +59,7 @@ function NewFieldPopUp({farmId}) {
                         <CloseIcon />
                     </IconButton>
                 </DialogTitle>
+                <br/>
                 <DialogContent>
                     <div>
                         <TextField
